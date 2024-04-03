@@ -1,0 +1,102 @@
+@page "/abogados"
+
+@inject NavigationManager Nav
+@inject IJSRuntime Jsx
+
+<PageTitle>Guardar Abogado</PageTitle>
+
+<h2 style="margin-top: 50px;">Registrar Abogado</h2>
+
+
+<EditForm Model="abogado" OnValidSubmit="EnviarAbogado">
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+
+                        <div class="form-floating mb-3">
+                            <input type="text" @bind-value="abogado.UserName" class="form-control" placeholder="" >
+                            <label for="floatingPassword">Nombre de usuario</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" @bind-value="abogado.Password" class="form-control" placeholder="" >
+                            <label for="floatingPassword">Contraseña</label>
+                        </div>
+
+
+                        @if(errores.Count > 0)
+                        {
+                            <div class="alert alert-danger">
+                            <ul>
+                                @foreach(var error in errores)
+                                {
+                                    <li>@error</li>
+                                }
+                            </ul>
+                            </div>
+                        }
+
+                    </div>
+
+                    <button type="submit" style="margin: 10px;" class="btn btn-primary">Guardar</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
+@code
+{
+
+    Abogado abogado = new Abogado(); 
+
+    List<string> errores = new List<string>();
+
+    void EnviarAbogado()
+    {
+
+        errores.Clear();
+
+        if(abogado.UserName.Length < 3)
+        {
+            errores.Add("Nombre de usuario Invalido");
+        }
+
+        if(abogado.Password.Length < 3)
+        {
+            errores.Add("Contraseña invalida");
+        }
+
+
+        Console.WriteLine(errores.Count());
+
+        if(errores.Count() > 0)
+        {
+            return;
+        }
+
+        abogado.Id = Guid.NewGuid().ToString();
+
+        var datos = Newtonsoft.Json.JsonConvert.SerializeObject(abogado);
+
+        //verificación
+
+        if(!Directory.Exists("abogados"))
+        {
+            Directory.CreateDirectory("abogados");   
+        }
+
+        // guardar el archivo
+
+        File.WriteAllText($"abogados/{abogado.Id}.Json", datos);
+        
+        Nav.NavigateTo("/abogados", true);
+
+    }
+
+}
