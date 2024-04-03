@@ -1,0 +1,72 @@
+@page "/imprimirCliente"
+@inject NavigationManager Nav
+
+<PageTitle>clientes</PageTitle>
+
+<h2 style="margin-top: 50px;">Clientes Registrados</h2>
+
+<button class="btn btn-primary" style="margin-top: 30px; margin-bottom: 30px;" @onclick="()=>registrar()">Registrar Cliente</button>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Telefono</th>
+                <th>Direccion</th>
+                <th>Estado Civil</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        @foreach (var cli in clientes)
+        {
+            <tr>
+                <td>@cli.Nombre</td>
+                <td>@cli.Apellido</td>                 
+                <td>@cli.Correo</td>
+                <td>@cli.Telefono</td>
+                <td>@cli.Direccion</td>
+                <td>@cli.EstadoCivil</td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+
+@code {
+
+    
+    List<Cliente> clientes = new List<Cliente>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        if(!Directory.Exists("clientes"))
+        {
+           return;   
+        }
+
+        var files = Directory.GetFiles("clientes");
+
+        foreach(var file in files)
+        {
+
+            var content = await File.ReadAllTextAsync(file);
+
+            var cliente = Newtonsoft.Json.JsonConvert.DeserializeObject<Cliente>(content);
+            
+            clientes.Add(cliente);
+        }
+
+    }  
+
+    void registrar()
+    {   
+        Nav.NavigateTo("/cliente");
+    }  
+
+}
