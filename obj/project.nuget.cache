@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "iaVgN+lJZakWUWbTqXq/qIXHBzIO6jzz6qqc9aLgJsYFd+Lpdc2nXKyfTVT4hv1WERftaPT05CkJDJSLK7t67g==",
+  "dgSpecHash": "9GQPzrIOYS00wvisU5lwlEesJ4csAD8twZPLSWZfpoCwDmV3bGEQmJ6UCZ2amL48K5AwFCjQvduPZTby1s2fDQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\MSI\\OneDrive\\Escritorio\\Proyecto_Tarea\\Proyecto_Tarea.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\MSI\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }
