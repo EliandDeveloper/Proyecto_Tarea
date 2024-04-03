@@ -1,0 +1,65 @@
+@page "/caso/{Id}"
+@layout BlankLayout 
+@inject IJSRuntime Jsx
+
+<div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <ul>
+
+                                <td><li><p>Cliente: @caso.Cliente</p></li></td>
+                                <li><p>Fecha: @caso.Fecha</p></li>
+                                <li><p>Tipo de caso: @caso.TipoCaso</p></li>
+                                <li><p>Ubicacion: @caso.Ubicacion</p></li>
+                                <li><p>Descripcion: @caso.Descripcion</p></li>
+                                <li>Abogado: @caso.Abogado</li>
+                                <td><li>Estado del caso: @caso.EstadoCaso</li></td>
+                                
+
+                            </ul>
+                            </thead>
+                        </table>
+
+
+                    </div>
+
+                    <button class="btn btn-primary" @onclick="ImprimirCaso" >Imprimir</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+@code
+{
+
+    [Parameter]
+    public string Id {get; set;} = "No se ha encontrado el caso  ";
+
+    Casos caso = new Casos();
+
+     protected override void OnInitialized()
+    {
+        if(Directory.Exists("casos"))
+        {
+            if(File.Exists("casos/" + Id + ".json"))
+            {
+                string json = File.ReadAllText("casos/" + Id + ".json");
+                caso = Newtonsoft.Json.JsonConvert.DeserializeObject<Casos>(json);
+            }
+        }
+    }
+
+    async Task ImprimirCaso()
+    {
+        await Jsx.InvokeVoidAsync("alert", "Preparándose para imprimir el caso. Verifica tu impresora.");
+        
+        await Jsx.InvokeVoidAsync("print");
+
+    }
+
+}
