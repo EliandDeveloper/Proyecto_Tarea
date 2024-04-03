@@ -1,9 +1,78 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+@layout BlankLayout 
+@inject NavigationManager Nav
 
-Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <div class="text-center mb-4">
+                        <img src="/icon.png" alt="Descripción de la imagen" class="img-fluid">
+                    </div>
+
+                    <div class="form-floating mb-3">
+                            <input type="text" @bind-value="abogado.UserName" class="form-control" placeholder="" >
+                        <label for="floatingPassword">Nombre de usuario</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="password" @bind-value="abogado.Password" class="form-control" placeholder="" >
+                        <label for="floatingPassword">Contraseña</label>
+                    </div>
+
+                </div>
+
+                <button class="btn btn-primary" style="margin: 10px;" @onclick="()=>iniciarSesion()">Iniciar Sesion</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+@code
+{
+
+    Abogado abogado = new Abogado();
+    List<Abogado> abogados = new List<Abogado>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        if(!Directory.Exists("abogados"))
+        {
+           return;   
+        }
+
+        var files = Directory.GetFiles("abogados");
+
+        foreach(var file in files)
+        {
+
+            var content = await File.ReadAllTextAsync(file);
+
+            var abogado = Newtonsoft.Json.JsonConvert.DeserializeObject<Abogado>(content);
+            
+            abogados.Add(abogado);
+        }
+
+    }  
+
+    void iniciarSesion()
+    {   
+        foreach(var user in abogados)
+        {
+            if(user.UserName == abogado.UserName && user.Password == abogado.Password)
+            {
+                Nav.NavigateTo("/imprimir");
+            }
+        }
+    }
+
+
+}
