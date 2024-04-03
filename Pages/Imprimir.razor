@@ -1,0 +1,72 @@
+@page "/imprimir"
+@inject NavigationManager Nav
+
+<PageTitle>casos para imprimir</PageTitle>
+
+<h2 style="margin-top: 50px;">Casos Registrados</h2>
+
+<button class="btn btn-primary" style="margin-top: 30px; margin-bottom: 30px;" @onclick="()=>registrar()">Registrar Caso</button>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Tipo de caso</th>
+                <th>Imprimir</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        @foreach (var cas in casos)
+        {
+            <tr>
+                <td>@cas.Cliente</td>
+                <td>@cas.TipoCaso</td>                 
+                <td>
+                <button class="btn btn-primary" @onclick="()=>navegar(cas.Id)">Imprimir</button>
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+
+@code {
+
+    
+    List<Casos> casos = new List<Casos>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        if(!Directory.Exists("casos"))
+        {
+           return;   
+        }
+
+        var files = Directory.GetFiles("casos");
+
+        foreach(var file in files)
+        {
+
+            var content = await File.ReadAllTextAsync(file);
+
+            var caso = Newtonsoft.Json.JsonConvert.DeserializeObject<Casos>(content);
+            
+            casos.Add(caso);
+        }
+
+    }
+
+    void navegar(string id)
+    {   
+        Nav.NavigateTo($"/caso/{id}");
+    }  
+
+    void registrar()
+    {   
+        Nav.NavigateTo("/inicio");
+    }   
+
+}
