@@ -1,0 +1,66 @@
+@page "/imprimirAbogado"
+@inject NavigationManager Nav
+
+<PageTitle>Abogados</PageTitle>
+
+<h2 style="margin-top: 50px;">Usuarios de los Abogados</h2>
+
+<button class="btn btn-primary" style="margin-top: 30px; margin-bottom: 30px;" @onclick="()=>registrar()">Registrar Abogado</button>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre de Usuario</th>
+                <th>Contraseñas</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+
+        @foreach (var user in abogados)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Password</td>                 
+            </tr>
+        }
+
+        </tbody>
+    </table>
+
+@code {
+
+    
+    List<Abogado> abogados = new List<Abogado>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        if(!Directory.Exists("abogados"))
+        {
+           return;   
+        }
+
+        var files = Directory.GetFiles("abogados");
+
+        foreach(var file in files)
+        {
+
+            var content = await File.ReadAllTextAsync(file);
+
+            var abogado = Newtonsoft.Json.JsonConvert.DeserializeObject<Abogado>(content);
+            
+            abogados.Add(abogado);
+        }
+
+    }  
+
+    void registrar()
+    {   
+        Nav.NavigateTo("/abogados");
+    }  
+
+}
