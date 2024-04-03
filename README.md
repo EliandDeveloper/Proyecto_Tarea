@@ -8,4 +8,5 @@ Si utilizara el proyecto, el usuario inicial para ingresar al sistema es
 Usuario: elian
 Contraseña: 1234
 
-Link del cuestionario: https://itlaedudo-my.sharepoint.com/:b:/g/personal/20222035_itla_edu_do/EQb2MI077XJAtsUfuHb2L_QBo5Y83QQXVW7yHyQOS5vXjQ?e=QnQE87
+Link del cuestionario en OneDrive: https://itlaedudo-my.sharepoint.com/:b:/g/personal/20222035_itla_edu_do/EQb2MI077XJAtsUfuHb2L_QBo5Y83QQXVW7yHyQOS5vXjQ?e=QnQE87
+Link alternativo a Drive: https://drive.google.com/file/d/1U71rfrgza8rS2zH2qo_NzekHpwjejsqR/view?usp=sharing
