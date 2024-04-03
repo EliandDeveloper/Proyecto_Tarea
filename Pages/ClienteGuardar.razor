@@ -1,0 +1,150 @@
+@page "/cliente"
+
+@inject NavigationManager Nav
+@inject IJSRuntime Jsx
+
+<PageTitle>Guardar Cliente</PageTitle>
+
+<h2 style="margin-top: 50px;">Clientes</h2>
+
+
+<EditForm Model="cliente" OnValidSubmit="EnviarCliente">
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+
+                        <div class="form-floating mb-3">
+                            <input type="text" @bind-value="cliente.Nombre" class="form-control" placeholder="" >
+                            <label for="floatingPassword">Nombre</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" @bind-value="cliente.Apellido" class="form-control" placeholder="" >
+                            <label for="floatingPassword">Apellido</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" @bind-value="cliente.Correo" class="form-control" placeholder="" >
+                            <label for="floatingPassword">Correo</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="number" @bind-value="cliente.Telefono" class="form-control" placeholder="" >
+                            <label for="floatingPassword">Telefono</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" @bind-value="cliente.Celular" class="form-control" placeholder="" >
+                            <label for="floatingPassword">Celular</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" @bind-value="cliente.Direccion" class="form-control" placeholder="" >
+                            <label for="floatingPassword">Direccion</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" @bind-value="cliente.EstadoCivil" class="form-control" placeholder="" >
+                            <label for="floatingPassword">Estado Civil</label>
+                        </div>
+
+                        @if(errores.Count > 0)
+                        {
+                            <div class="alert alert-danger">
+                            <ul>
+                                @foreach(var error in errores)
+                                {
+                                    <li>@error</li>
+                                }
+                            </ul>
+                            </div>
+                        }
+
+                    </div>
+
+                    <button type="submit" style="margin: 10px;" class="btn btn-primary">Guardar</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
+@code
+{
+
+    Cliente cliente = new Cliente(); 
+
+    List<string> errores = new List<string>();
+
+    void EnviarCliente()
+    {
+
+        errores.Clear();
+
+        if(cliente.Nombre.Length < 3)
+        {
+            errores.Add("Debe nombre valido");
+        }
+
+        if(cliente.Apellido.Length < 3)
+        {
+            errores.Add("Debe ingresar un apellido");
+        }
+        
+        if(cliente.Correo.Length < 3)
+        {
+            errores.Add("Debe ingresar un correo");
+        }
+
+        if(cliente.Telefono < 3)
+        {
+            errores.Add("Debe ingresar un telefono");
+        }
+
+        if(cliente.Celular < 3)
+        {
+            errores.Add("Debe ingresar un celular");
+        }
+
+        if(cliente.Direccion.Length < 3)
+        {
+            errores.Add("Debe ingresar una direccion");
+        }
+
+        if(cliente.EstadoCivil.Length < 4)
+        {
+            errores.Add("Debe ingresar un estado civil");
+        }
+
+        Console.WriteLine(errores.Count());
+
+        if(errores.Count() > 0)
+        {
+            return;
+        }
+
+        cliente.Id = Guid.NewGuid().ToString();
+
+        var datos = Newtonsoft.Json.JsonConvert.SerializeObject(cliente);
+
+        //verificación
+
+        if(!Directory.Exists("clientes"))
+        {
+            Directory.CreateDirectory("clientes");   
+        }
+
+        // guardar el archivo
+
+        File.WriteAllText($"clientes/{cliente.Id}.Json", datos);
+        
+        Nav.NavigateTo("/imprimirCliente", true);
+
+    }
+
+}
