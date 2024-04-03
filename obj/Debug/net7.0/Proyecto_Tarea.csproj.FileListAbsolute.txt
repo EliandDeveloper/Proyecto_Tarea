@@ -1,8 +1,0 @@
-C:\Users\MSI\OneDrive\Escritorio\Proyecto_Tarea\obj\Debug\net7.0\Proyecto_Tarea.csproj.AssemblyReference.cache
-C:\Users\MSI\OneDrive\Escritorio\Proyecto_Tarea\obj\Debug\net7.0\Proyecto_Tarea.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\MSI\OneDrive\Escritorio\Proyecto_Tarea\obj\Debug\net7.0\Proyecto_Tarea.AssemblyInfoInputs.cache
-C:\Users\MSI\OneDrive\Escritorio\Proyecto_Tarea\obj\Debug\net7.0\Proyecto_Tarea.AssemblyInfo.cs
-C:\Users\MSI\OneDrive\Escritorio\Proyecto_Tarea\obj\Debug\net7.0\Proyecto_Tarea.csproj.CoreCompileInputs.cache
-C:\Users\MSI\OneDrive\Escritorio\Proyecto_Tarea\obj\Debug\net7.0\Proyecto_Tarea.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\MSI\OneDrive\Escritorio\Proyecto_Tarea\obj\Debug\net7.0\Proyecto_Tarea.RazorAssemblyInfo.cache
-C:\Users\MSI\OneDrive\Escritorio\Proyecto_Tarea\obj\Debug\net7.0\Proyecto_Tarea.RazorAssemblyInfo.cs
