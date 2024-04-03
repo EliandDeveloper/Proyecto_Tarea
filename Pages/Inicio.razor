@@ -1,0 +1,189 @@
+@page "/inicio"
+ 
+@inject NavigationManager Nav
+@inject IJSRuntime Jsx
+
+<PageTitle>Guardar Caso</PageTitle>
+
+<h2 style="margin-top: 50px;">Casos</h2>
+
+
+<EditForm Model="casos" OnValidSubmit="EnviarCaso">
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+
+                        <div class="input-group mb-3">
+                            <label class="input-group-text"  for="inputGroupSelect01">Cliente</label>
+                            <select class="form-select" @bind="casos.Cliente" id="inputGroupSelect01">
+                                 <option selected>Seleccione un cliente</option>
+                                @foreach(var cli in clientes)
+                                {
+                                    <option value="@cli.Nombre">@cli.Nombre</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Caso</label>
+                        <select class="form-select" @bind="casos.TipoCaso" id="inputGroupSelect01">
+                            <option selected>Seleccione el tipo de caso</option>
+                            <option value="Caso Civil">Caso Civil</option>
+                            <option value="Caso Penal">Caso Penal</option>
+                        </select>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" @bind-value="casos.Ubicacion" class="form-control" placeholder="" >
+                            <label for="floatingPassword">Ubicación</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" @bind-value="casos.Descripcion" class="form-control" placeholder="" >
+                            <label for="floatingPassword">Descripcion</label>
+                        </div>
+
+                        <div class="input-group mb-3">
+                        <label class="input-group-text"  for="inputGroupSelect01">Abogado</label>
+                        <select class="form-select" @bind="casos.Abogado" id="inputGroupSelect01">
+                            <option selected>Seleccione el abogado</option>
+
+                                @foreach(var user in abogados)
+                                {
+                                    <option value="@user.UserName">@user.UserName</option>
+                                }
+
+                        </select>
+                        </div>
+
+                        <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Estado</label>
+                        <select class="form-select" @bind="casos.EstadoCaso" id="inputGroupSelect01">
+                            <option selected>Seleccione el estado del caso</option>
+                            <option value="Nuevo">Nuevo</option>
+                            <option value="Abierto">Abierto</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Resuelto">Resuelto</option>
+                        </select>
+                        </div>
+
+                        @if(errores.Count > 0)
+                        {
+                            <div class="alert alert-danger">
+                            <ul>
+                                @foreach(var error in errores)
+                                {
+                                    <li>@error</li>
+                                }
+                            </ul>
+                            </div>
+                        }
+
+                    </div>
+
+                    <button type="submit" style="margin: 10px;" class="btn btn-primary">Guardar</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
+@code
+{
+
+    Casos casos = new Casos(); 
+    List<Cliente> clientes = new List<Cliente>();
+    List<Abogado> abogados = new List<Abogado>();
+
+    List<string> errores = new List<string>();
+
+    void EnviarCaso()
+    {
+
+        errores.Clear();
+
+
+        if(casos.Ubicacion.Length < 5)
+        {
+            errores.Add("Debe ingresar una ubicación");
+        }
+        
+        if(casos.Descripcion.Length < 10)
+        {
+            errores.Add("Debe ingresar una descripcion");
+        }
+
+
+
+        Console.WriteLine(errores.Count());
+
+        if(errores.Count() > 0)
+        {
+            return;
+        }
+
+        casos.Id = Guid.NewGuid().ToString();
+
+        var datos = Newtonsoft.Json.JsonConvert.SerializeObject(casos);
+
+        //verificación
+
+        if(!Directory.Exists("casos"))
+        {
+            Directory.CreateDirectory("casos");   
+        }
+
+        // guardar el archivo
+
+        File.WriteAllText($"casos/{casos.Id}.Json", datos);
+        
+        Nav.NavigateTo("/imprimir"); // se creara mas adelante
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        if(!Directory.Exists("clientes"))
+        {
+           return;   
+        }
+
+        if(!Directory.Exists("abogados"))
+        {
+           return;   
+        }
+
+        var files = Directory.GetFiles("clientes");
+
+        foreach(var file in files)
+        {
+
+            var content = await File.ReadAllTextAsync(file);
+
+            var cliente = Newtonsoft.Json.JsonConvert.DeserializeObject<Cliente>(content);
+            
+            clientes.Add(cliente);
+        }
+
+        var filesAbogado = Directory.GetFiles("abogados");
+
+        foreach(var file in filesAbogado)
+        {
+
+            var content = await File.ReadAllTextAsync(file);
+
+            var abogado = Newtonsoft.Json.JsonConvert.DeserializeObject<Abogado>(content);
+            
+            abogados.Add(abogado);
+        }
+
+    }
+
+}
