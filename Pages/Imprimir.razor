@@ -5,7 +5,7 @@
 
 <h2 style="margin-top: 50px;">Casos Registrados</h2>
 
-<button class="btn btn-primary" style="margin-top: 30px; margin-bottom: 30px;" @onclick="()=>registrar()">Registrar Caso</button>
+<button class="btn btn-primary" id="registrar_casos" style="margin-top: 30px; margin-bottom: 30px;" @onclick="()=>registrar()">Registrar Caso</button>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -23,7 +23,7 @@
                 <td>@cas.Cliente</td>
                 <td>@cas.TipoCaso</td>                 
                 <td>
-                <button class="btn btn-primary" @onclick="()=>navegar(cas.Id)">Imprimir</button>
+                <button class="btn btn-primary" id="detalle_caso" @onclick="()=>navegar(cas.Id)">Imprimir</button>
                 </td>
             </tr>
         }
