@@ -17,12 +17,12 @@
                     <div class="card-body">
 
                         <div class="form-floating mb-3">
-                            <input type="text" @bind-value="abogado.UserName" class="form-control" placeholder="" >
+                            <input type="text" id="abogado_user" @bind-value="abogado.UserName" class="form-control" placeholder="" >
                             <label for="floatingPassword">Nombre de usuario</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" @bind-value="abogado.Password" class="form-control" placeholder="" >
+                            <input type="text" id="abogado_password" @bind-value="abogado.Password" class="form-control" placeholder="" >
                             <label for="floatingPassword">Contraseña</label>
                         </div>
 
@@ -41,7 +41,7 @@
 
                     </div>
 
-                    <button type="submit" style="margin: 10px;" class="btn btn-primary">Guardar</button>
+                    <button type="submit" id="abogado_guardar" style="margin: 10px;" class="btn btn-primary">Guardar</button>
                     
                 </div>
             </div>
