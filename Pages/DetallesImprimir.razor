@@ -27,7 +27,7 @@
 
                     </div>
 
-                    <button class="btn btn-primary" @onclick="ImprimirCaso" >Imprimir</button>
+                    <button class="btn btn-primary" id="imprimir_detalle_caso" @onclick="ImprimirCaso" >Imprimir</button>
 
                 </div>
             </div>
@@ -55,9 +55,7 @@
     }
 
     async Task ImprimirCaso()
-    {
-        await Jsx.InvokeVoidAsync("alert", "Preparándose para imprimir el caso. Verifica tu impresora.");
-        
+    {   
         await Jsx.InvokeVoidAsync("print");
 
     }

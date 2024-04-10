@@ -15,19 +15,19 @@
                         <img src="\icon.png" alt="Descripción de la imagen" class="img-fluid">
                     </div>
 
-                    <div class="form-floating mb-3">
-                            <input type="text" @bind-value="abogado.UserName" class="form-control" placeholder="" >
+                    <div class="form-floating mb-3" >
+                            <input type="text" @bind-value="abogado.UserName" class="form-control" id="user" placeholder="" >
                         <label for="floatingPassword">Nombre de usuario</label>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <input type="password" @bind-value="abogado.Password" class="form-control" placeholder="" >
+                    <div class="form-floating mb-3" >
+                        <input type="password" @bind-value="abogado.Password" class="form-control" id="password" placeholder="" >
                         <label for="floatingPassword">Contraseña</label>
                     </div>
 
                 </div>
 
-                <button class="btn btn-primary" style="margin: 10px;" @onclick="()=>iniciarSesion()">Iniciar Sesion</button>
+                <button class="btn btn-primary" id="confirm_button" style="margin: 10px;" @onclick="()=>iniciarSesion()">Iniciar Sesion</button>
                 
             </div>
         </div>
